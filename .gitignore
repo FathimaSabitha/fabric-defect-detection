@@ -1,6 +1,5 @@
 
 # Ignore backup folder (your database is inside it)
-fabric_segmentation backup/db
 
 # Ignore Python cache
 __pycache__/
