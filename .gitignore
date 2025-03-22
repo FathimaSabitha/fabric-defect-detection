@@ -1,0 +1,12 @@
+
+# Ignore backup folder (your database is inside it)
+fabric_segmentation backup/
+
+# Ignore Python cache
+__pycache__/
+
+# Ignore environment variables
+.env
+
+# Ignore SQLite databases
+*.sqlite3
