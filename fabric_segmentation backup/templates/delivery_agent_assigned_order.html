@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assigned Order</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external stylesheet (if any) -->
+    <style>
+        /* Basic styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header, footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        table a:hover {
+            text-decoration: underline;
+        }
+
+        .update-link {
+            background-color: #ff9800;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .update-link:hover {
+            background-color: #e68900;
+        }
+
+        .center-container {
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    {% include 'delivery_header.html' %}
+    <br><br><br><br>
+    <div class="center-container">
+        <h1>Assigned Orders</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>SL NO</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Company Name</th>
+                    <th>Owner Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data['view_assigned_order'] %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row['status'] }}</td>
+                    <td>{{ row['total'] }}</td>
+                    <td>{{ row['date'] }}</td>
+                    <td>{{ row['company_name'] }}</td>
+                    <td>{{ row['owner_name'] }}</td>
+                    <td>{{ row['email'] }}</td>
+                    <td>{{ row['phone'] }}</td>
+                    <td>{{ row['address'] }}</td>
+                    <td>
+                        {% if row['status'] == 'pending' %}
+                            <a class="update-link" href="?action=update&id={{ row['assign_id'] }}&omid={{ row['om_id'] }}">Update</a>
+                        {% endif %}
+                        <br>
+                        <a href="delivery_agent_view_details?id={{ row['om_id'] }}">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'footer.html' %}
+<br><br>
+</body>
+</html>

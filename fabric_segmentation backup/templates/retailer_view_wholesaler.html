@@ -1,0 +1,83 @@
+
+
+{% include 'retailer_header.html' %}
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background */
+        color: #343a40; /* Dark text color */
+        font-family: Arial, sans-serif; /* Font style */
+    }
+
+    h2 {
+        color: #015599; /* Light blue color for headings */
+    }
+
+    table {
+        width: 90%; /* Table width */
+        margin: 20px auto; /* Center table */
+        border-collapse: collapse; /* Merge borders */
+        background-color: #ffffff; /* White background for table */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for table */
+    }
+
+    th, td {
+        padding: 12px 15px; /* Padding for cells */
+        text-align: left; /* Align text to the left */
+        border-bottom: 1px solid #dee2e6; /* Bottom border for cells */
+    }
+
+    th {
+        background-color: #e9ecef; /* Light gray background for header */
+        color: #495057; /* Dark text color for header */
+    }
+
+    tr:hover {
+        background-color: #f1f1f1; /* Light gray on hover */
+    }
+
+    a {
+        color: #007bff; /* Blue color for links */
+        text-decoration: none; /* No underline */
+    }
+
+    a:hover {
+        text-decoration: underline; /* Underline on hover */
+    }
+</style>
+<center style="margin-top: 8%; margin-bottom: 20%;">
+    <h2 >WHOLESALERS</h2>
+        <table >
+            
+                <tr>
+                    <th>Slno</th>
+                    <th>Company Name</th>
+                    <th >Owner Name</th>
+                    <th >Email</th>
+                    <th >Phone</th>
+                    <th >Address</th>
+                    <th>Products</th>
+                    <!-- <th>Feedback</th> -->
+                    
+                </tr>
+                {% for i in data['view'] %}
+                <tr >
+                    <td >{{loop.index}}</td>
+                    <td >{{i['company_name']}}</td>
+                    <td >{{i['owner_name']}}</td>
+                    <td >{{i['email']}}</td>
+                    <td >{{i['phone']}}</td>
+                    <td >{{i['address']}}</td>
+                    <td><a href="retailer_view_products?id={{i['wholesaler_id']}}">View</a></td>
+                    <!-- <td><a href="/retailer_send_feedback?action=send&id={{i['wholesaler_id']}}">send</a></td> -->
+
+                </tr>
+                {% endfor %}
+            
+        </table>
+    </center>  
+
+
+           
+    
+{% include 'footer.html' %}

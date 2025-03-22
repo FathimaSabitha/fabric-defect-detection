@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wholesaler Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .input-field:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .input-field.error {
+            border-color: red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+            .submit-btn {
+                font-size: 14px;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+
+    <script>
+        function validateForm(event) {
+            let valid = true;
+            let phone = document.getElementById('phone');
+            let pin = document.getElementById('pin');
+            let businessLicense = document.getElementById('upload_business_license').files[0];
+            let taxLicense = document.getElementById('upload_tax_license').files[0];
+            let email = document.getElementById('email');
+            let username = document.getElementById('username');
+            let password = document.getElementById('password');
+            let address = document.getElementById('address');
+
+            let phonePattern = /^[0-9]{10}$/;
+            let pinPattern = /^[0-9]{6}$/;
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            // Reset all errors
+            let fields = document.querySelectorAll('.input-field');
+            fields.forEach(field => {
+                field.classList.remove('error');
+            });
+
+            // Validate username and password
+            if (username.value.trim() === '') {
+                username.classList.add('error');
+                valid = false;
+            }
+            if (password.value.trim() === '') {
+                password.classList.add('error');
+                valid = false;
+            }
+
+            // Validate phone number
+            if (!phonePattern.test(phone.value)) {
+                phone.classList.add('error');
+                valid = false;
+                showError(phone, "Please enter a valid 10-digit phone number.");
+            }
+
+            // Validate pin code
+            if (!pinPattern.test(pin.value)) {
+                pin.classList.add('error');
+                valid = false;
+                showError(pin, "Please enter a valid 6-digit pin code.");
+            }
+
+            // Validate email
+            if (!emailPattern.test(email.value)) {
+                email.classList.add('error');
+                valid = false;
+                showError(email, "Please enter a valid email address.");
+            }
+
+            // Validate business license (pdf)
+            if (businessLicense && businessLicense.type !== 'application/pdf') {
+                valid = false;
+                showError(businessLicense, "Business License must be a PDF file.");
+            }
+
+            // Validate tax license (pdf)
+            if (taxLicense && taxLicense.type !== 'application/pdf') {
+                valid = false;
+                showError(taxLicense, "Tax License must be a PDF file.");
+            }
+
+            // Prevent form submission if validation fails
+            if (!valid) {
+                event.preventDefault();
+            }
+            return valid;
+        }
+
+        function showError(field, message) {
+            let errorMessage = document.createElement('div');
+            errorMessage.classList.add('error-message');
+            errorMessage.textContent = message;
+            field.closest('.form-group').appendChild(errorMessage);
+        }
+    </script>
+</head>
+
+<body>
+    {% include 'public_header.html' %}
+
+    <div class="form-container">
+        <br><br><br>
+        <h1>Wholesaler Registration Form</h1>
+        <form method="post" onsubmit="return validateForm(event)">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="input-field" placeholder="Enter username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="input-field" placeholder="Enter password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="company_name">Company Name</label>
+                <input type="text" id="company_name" name="company_name" class="input-field" placeholder="Enter company name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="owner_name">Owner Name</label>
+                <input type="text" id="owner_name" name="owner_name" class="input-field" placeholder="Enter owner name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="input-field" placeholder="Enter email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" class="input-field" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" class="input-field" placeholder="Enter address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pin">Pin</label>
+                <input type="text" id="pin" name="pin" class="input-field" placeholder="Enter pin code" required>
+            </div>
+
+            <div class="form-group">
+                <label for="upload_business_license">Upload Business License</label>
+                <input type="file" id="upload_business_license" name="upload_business_license" class="input-field" required>
+            </div>
+
+            <div class="form-group">
+                <label for="upload_tax_license">Upload Tax License</label>
+                <input type="file" id="upload_tax_license" name="upload_tax_license" class="input-field" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" name="Submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+
+</html>

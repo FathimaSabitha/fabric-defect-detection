@@ -1,0 +1,112 @@
+
+
+{% include 'retailer_header.html' %}
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background */
+        color: #343a40; /* Dark text color */
+        font-family: Arial, sans-serif; /* Font style */
+    }
+
+    h2 {
+        color: #015599; /* Light blue color for headings */
+    }
+
+    table {
+        width: 90%; /* Table width */
+        margin: 20px auto; /* Center table */
+        border-collapse: collapse; /* Merge borders */
+        background-color: #ffffff; /* White background for table */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for table */
+    }
+
+    th, td {
+        padding: 12px 15px; /* Padding for cells */
+        text-align: left; /* Align text to the left */
+        border-bottom: 1px solid #dee2e6; /* Bottom border for cells */
+    }
+
+    th {
+        background-color: #e9ecef; /* Light gray background for header */
+        color: #495057; /* Dark text color for header */
+    }
+
+    tr:hover {
+        background-color: #f1f1f1; /* Light gray on hover */
+    }
+
+    a {
+        color: #007bff; /* Blue color for links */
+        text-decoration: none; /* No underline */
+    }
+
+    a:hover {
+        text-decoration: underline; /* Underline on hover */
+    }
+
+    .product-table {
+        width: 90%;
+        margin-top: 5%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        animation: fadeInTable 1.5s ease forwards;
+    }
+
+    @keyframes fadeInTable {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<center style="margin-top: 8%; margin-bottom: 20%;">
+    
+
+    <!-- Delivery Agent Details Section -->
+    {% if data['viewdg'] %}
+    <h2>MY ORDER DETAILS</h2>
+        <table>
+            <tr>
+                <th>Delivery Agent Name</th>
+                <th>Phone</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>{{ data['viewdg'][0]['fname'] }}</td>
+                <td>{{ data['viewdg'][0]['phone'] }}</td>
+                <td>{{ data['viewdg'][0]['status'] }}</td>
+            </tr>
+        </table>
+    {% else %}
+
+    <!-- Orders Table -->
+     
+    <table>
+        <tr>
+            <th>Slno</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Agent</th>
+            <th>Report</th>
+        </tr>
+        {% for i in data['view'] %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ i['product_name'] }}</td>
+            <td>{{i['stock']}}</td>
+            <td>{{ i['amount'] }}</td>
+            <td>{{ i['date'] }}</td>
+            <td><a href="?action=viewdg&id={{ i['om_id'] }}">View</a></td>
+            <td><a href="retailer_detect_defect?action=view&id={{ i['product_id'] }}">Report</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% endif %}
+</center>
+
+{% include 'footer.html' %}

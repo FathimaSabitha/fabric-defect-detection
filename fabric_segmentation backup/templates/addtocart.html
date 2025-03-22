@@ -1,0 +1,124 @@
+{% include 'retailer_header.html' %}
+
+<style>
+    .quantity-form-container {
+        background-color: rgba(109, 102, 145, 0.26);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+        width: 500px;
+        margin: auto;
+        margin-bottom: 20px;
+        transform-origin: top;
+        animation: foldIn 1s ease forwards;
+    }
+
+    /* Folding animation */
+    @keyframes foldIn {
+        0% {
+            transform: perspective(600px) rotateX(-90deg);
+            opacity: 0;
+        }
+        100% {
+            transform: perspective(600px) rotateX(0);
+            opacity: 1;
+        }
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 24px;
+        animation: fadeIn 2s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    th {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f1f1f1;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+        background-color: #e0f7fa;
+        box-shadow: 0 0 10px rgba(181, 218, 228, 0.6);
+    }
+
+    input[type="submit"] {
+        background-color: #4c77af;
+        color: white;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    input[type="submit"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+        transition: all 0.4s ease;
+    }
+
+    input[type="submit"]:hover::before {
+        left: 100%;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #53b8e0;
+    }
+</style>
+
+<center style="margin-top: 8%; margin-bottom: 20%;">
+    <!-- Quantity Form with folding animation -->
+    <div class="quantity-form-container">
+        <h2>QUANTITY</h2>
+        <form method="post">
+            <table>
+                <tr>
+                    <td><input type="text" name="quantity" required></td>
+                </tr>
+            </table>
+            <input type="submit" name="submit" value="Add">
+        </form>
+    </div>
+</center>
+
+{% include 'footer.html' %}

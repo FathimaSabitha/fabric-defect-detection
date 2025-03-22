@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .product-form table {
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .product-form th {
+            width: 30%;
+            padding: 10px 15px;
+            text-align: right;
+            color: #495057;
+        }
+
+        .product-form td {
+            padding: 10px 15px;
+        }
+
+        .product-form input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .product-form input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .product-form input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 10px 20px;
+        }
+
+        .product-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .product-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            width: 18rem;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .card-footer a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #007bff;
+        }
+
+        .card-footer a:hover {
+            color: #0056b3;
+        }
+
+        .btn-update, .btn-delete {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn-update {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-update:hover {
+            background-color: #218838;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'wholesaler_header.html' %}
+    
+    <div class="container" style="margin-top: 100px;">
+        {% if data['up'] %}
+        <h1>Update Product</h1>
+        <form method="post" class="product-form" id="productForm" onsubmit="return validateForm()" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <th>Product Name:</th>
+                    <td><input type="text" name="product_name" id="product_name" value="{{data['up'][0]['product_name']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <td><input type="text" name="description" id="description" value="{{data['up'][0]['description']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><input type="text" name="category" id="category" value="{{data['up'][0]['category']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Fabric Type:</th>
+                    <td><input type="text" name="fabric_type" id="fabric_type" value="{{data['up'][0]['fabric_type']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Color:</th>
+                    <td><input type="text" name="color" id="color" value="{{data['up'][0]['value']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Price Per Unit:</th>
+                    <td><input type="number" name="price_per_unit" id="price_per_unit" value="{{data['up'][0]['price_per_unit']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Stock Quantity:</th>
+                    <td><input type="number" name="stock_quantity" id="stock_quantity" value="{{data['up'][0]['stock_quantity']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Minimum Order:</th>
+                    <td><input type="number" name="minimum_order" id="minimum_order" value="{{data['up'][0]['minimum_order']}}" required></td>
+                </tr>
+                <tr>
+                    <th>Image:</th>
+                    <td><input type="file" name="image" id="image" value="{{data['up'][0]['image']}}" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" name="update" value="Update Product"></td>
+                </tr>
+            </table>
+        </form>
+        {% else %}
+        <h1>Add New Product</h1>
+        <form method="post" class="product-form" id="productForm" onsubmit="return validateForm()" enctype="multipart/form-data">
+            <table style="margin-top: 100px;">
+                <tr>
+                    <th>Product Name:</th>
+                    <td><input type="text" name="product_name" id="product_name" pattern="[a-zA-Z ]+" title="alphabets only" required></td>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <td><input type="text" name="description" id="description" required></td>
+                </tr>
+                <tr>
+                    <th>Category:</th>
+                    <td><input type="text" name="category" id="category" required></td>
+                </tr>
+                <tr>
+                    <th>Fabric Type:</th>
+                    <td><input type="text" name="fabric_type" id="fabric_type" required></td>
+                </tr>
+                <tr>
+                    <th>Color:</th>
+                    <td><input type="text" name="color" id="color" required></td>
+                </tr>
+                <tr>
+                    <th>Price Per Unit:</th>
+                    <td><input type="number" name="price_per_unit" id="price_per_unit" required></td>
+                </tr>
+                <tr>
+                    <th>Stock Quantity:</th>
+                    <td><input type="number" name="stock_quantity" id="stock_quantity" required></td>
+                </tr>
+                <tr>
+                    <th>Minimum Order:</th>
+                    <td><input type="number" name="minimum_order" id="minimum_order" required></td>
+                </tr>
+                <tr>
+                    <th>Image:</th>
+                    <td><input type="file" name="image" id="image" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" name="Submit" value="Add Product"></td>
+                </tr>
+            </table>
+        </form>
+        {% endif %}
+        
+        <h1>View Products</h1>
+        <div class="product-cards">
+            {% for row in data['view'] %}
+            <div class="card">
+                <img src="/{{ row['image'] }}" class="card-img-top" alt="{{ row['product_name'] }}">
+            
+                <div class="card-body">
+                    <h5 class="card-title">{{ row['product_name'] }}</h5>
+                    <p class="card-text"><strong>Description:</strong> {{ row['description'] }}</p>
+                    <p class="card-text"><strong>Category:</strong> {{ row['category'] }}</p>
+                    <p class="card-text"><strong>Color:</strong> {{ row['color'] }}</p>
+                    <p class="card-text"><strong>Price Per Unit:</strong> {{ row['price_per_unit'] }}</p>
+                    <p class="card-text"><strong>Stock Quantity:</strong> {{ row['stock_quantity'] }}</p>
+                    <p class="card-text"><strong>Minimum Order:</strong> {{ row['minimum_order'] }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="?action=update&id={{row['product_id']}}" class="btn-update">Update</a>
+                    <a href="?action=delete&id={{row['product_id']}}" class="btn-delete">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script>
+        function validateForm() {
+            // Custom validation logic for each field
+            const name = document.getElementById('product_name');
+            const description = document.getElementById('description');
+            const category = document.getElementById('category');
+            const fabricType = document.getElementById('fabric_type');
+            const color = document.getElementById('color');
+            const pricePerUnit = document.getElementById('price_per_unit');
+            const stockQuantity = document.getElementById('stock_quantity');
+            const minimumOrder = document.getElementById('minimum_order');
+            const image = document.getElementById('image');
+            
+            if (name.value === "" || description.value === "" || category.value === "" ||
+                fabricType.value === "" || color.value === "" || pricePerUnit.value === "" ||
+                stockQuantity.value === "" || minimumOrder.value === "" || image.value === "") {
+                alert("All fields are required.");
+                return false;
+            }
+
+            // If everything is valid
+            return true;
+        }
+    </script>
+
+</body>
+</html>

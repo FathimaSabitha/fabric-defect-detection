@@ -1,0 +1,152 @@
+{% include 'public_header.html' %}
+<br><br><br><br>
+<center>
+    <body style="font-family: Arial, sans-serif; background-color: #f4f7fc; padding: 20px;">
+
+    <h1 style="color: #4CAF50; text-align: center;">Retailer Registration Form</h1>
+
+    <div style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 30px; max-width: 600px; width: 100%; margin: auto;">
+        <form method="post" onsubmit="return validateForm()">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Username:</th>
+                    <td><input type="text" name="username" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="usernameError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Password:</th>
+                    <td><input type="password" name="password" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="passwordError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Company Name:</th>
+                    <td><input type="text" name="company_name" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="companyNameError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Owner Name:</th>
+                    <td><input type="text" name="owner_name" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="ownerNameError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Email:</th>
+                    <td><input type="email" name="email" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="emailError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Phone:</th>
+                    <td><input type="tel" name="phone" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" pattern="^[0-9]{10}$" title="Phone number must be 10 digits" required>
+                        <span id="phoneError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Address:</th>
+                    <td><input type="text" name="address" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="addressError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Pin:</th>
+                    <td><input type="text" name="pin" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" pattern="^[0-9]{6}$" title="Pin code must be 6 digits" required>
+                        <span id="pinError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Upload Business License:</th>
+                    <td><input type="file" name="upload_business_license" accept=".pdf" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="businessLicenseError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="padding: 10px; text-align: left; color: #333;">Upload Tax License:</th>
+                    <td><input type="file" name="upload_tax_license" accept=".pdf" style="width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ddd;" required>
+                        <span id="taxLicenseError" style="color: red; font-size: 12px;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="center" colspan="2">
+                        <input type="submit" name="Submit" value="Register" style="background-color: #4CAF50; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    </body>
+    <br><br>
+</center>
+{% include 'footer.html' %}
+
+<script>
+    // JavaScript Validation Function
+    function validateForm() {
+        let valid = true;
+
+        // Clear previous error messages
+        let errorFields = document.querySelectorAll('span[id$="Error"]');
+        errorFields.forEach(function(field) {
+            field.textContent = '';
+        });
+
+        var phone = document.querySelector('input[name="phone"]').value;
+        var pin = document.querySelector('input[name="pin"]').value;
+        var businessLicense = document.querySelector('input[name="upload_business_license"]').files[0];
+        var taxLicense = document.querySelector('input[name="upload_tax_license"]').files[0];
+
+        // Validate phone number (exactly 10 digits)
+        var phonePattern = /^[0-9]{10}$/;
+        if (!phonePattern.test(phone)) {
+            document.getElementById('phoneError').textContent = "Phone number must be exactly 10 digits.";
+            document.querySelector('input[name="phone"]').style.borderColor = "red";
+            valid = false;
+        } else {
+            document.querySelector('input[name="phone"]').style.borderColor = "#ddd";
+        }
+
+        // Validate pin code (exactly 6 digits)
+        var pinPattern = /^[0-9]{6}$/;
+        if (!pinPattern.test(pin)) {
+            document.getElementById('pinError').textContent = "Pin code must be exactly 6 digits.";
+            document.querySelector('input[name="pin"]').style.borderColor = "red";
+            valid = false;
+        } else {
+            document.querySelector('input[name="pin"]').style.borderColor = "#ddd";
+        }
+
+        // Validate Business License file type
+        if (businessLicense && businessLicense.type !== 'application/pdf') {
+            document.getElementById('businessLicenseError').textContent = "Please upload a Business License in PDF format.";
+            document.querySelector('input[name="upload_business_license"]').style.borderColor = "red";
+            valid = false;
+        } else {
+            document.querySelector('input[name="upload_business_license"]').style.borderColor = "#ddd";
+        }
+
+        // Validate Tax License file type
+        if (taxLicense && taxLicense.type !== 'application/pdf') {
+            document.getElementById('taxLicenseError').textContent = "Please upload a Tax License in PDF format.";
+            document.querySelector('input[name="upload_tax_license"]').style.borderColor = "red";
+            valid = false;
+        } else {
+            document.querySelector('input[name="upload_tax_license"]').style.borderColor = "#ddd";
+        }
+
+        return valid;  // If all validations pass, the form will submit
+    }
+</script>
+</html>

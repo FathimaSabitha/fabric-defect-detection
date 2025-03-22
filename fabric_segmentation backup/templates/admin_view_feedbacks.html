@@ -1,0 +1,56 @@
+
+<body>
+    {% include 'admin_header.html'%}
+    <!-- <center style="margin-top: 10%;margin-bottom:20%;">
+    <h1>COMPLAINTS</h1>
+    <table border="1">
+        <tr>
+            <th>Sl No</th>
+            <th>description</th>
+            <th>reply</th>
+            <th>date</th>
+        </tr>
+
+        {% for row in data['view_complaint'] %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row['description'] }}</td>
+            <td>{{ row['reply'] }}</td>
+            <td>{{ row['date'] }}</td>
+            <td><a href="admin_com_reply?id={{row['complaint_id']}}">reply</a></td>
+        </tr>
+        {% endfor %}  --> -->
+    <!-- </table> -->
+    
+   
+    {% include 'admin_header.html' %}
+    <center style="margin-top: 10%; margin-bottom: 20%;">
+      <br><br>
+      <h1 style="font-size: 36px; color: #333; font-family: Arial, sans-serif;">FEEDBACK</h1>
+    
+      <div style="max-width: 1200px; width: 100%; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; background-color: #fff;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #ddd;">
+          <thead>
+            <tr style="background-color: #4CAF50; color: white; font-size: 18px;">
+              <th style="padding: 12px; text-align: left;">Sl No</th>
+              <th style="padding: 12px; text-align: left;">Feedback</th>
+              <th style="padding: 12px; text-align: left;">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in data['view_feed'] %}
+              <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px; text-align: left; font-size: 16px;">{{ loop.index }}</td>
+                <td style="padding: 12px; text-align: left; font-size: 16px;">{{ row['feedback'] }}</td>
+                <td style="padding: 12px; text-align: left; font-size: 16px;">{{ row['date'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </center>
+    
+    {% include 'footer.html' %}
+    </body>
+    </html>
+    

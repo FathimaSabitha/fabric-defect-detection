@@ -1,0 +1,138 @@
+{% include 'admin_header.html'%}
+<br><br><br><br>
+{% include 'admin_header.html' %}
+
+<style>
+    
+
+    center {
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+
+    h1 {
+        color: #333;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 80%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 500;
+        }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    a {
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .accept-btn {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .reject-btn {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .accept-btn:hover {
+        background-color: #45a049;
+    }
+
+    .reject-btn:hover {
+        background-color: #e53935;
+    }
+
+    .container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+</style>
+ <center style="margin-top: 10%;margin-bottom:20%;"> 
+    <h1 class="text-center">Admin View Retailer</h1>
+     <table class="">
+        <tr>
+            <th>Sl No</th>
+            <th>Company name</th>
+            <th>Owner Name</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>adress</th>
+            <th>pin</th>
+            <th>upload_business_license</th>
+            <th>upload_tax_license</th>
+        </tr>
+
+        {% for row in data1['view_retail'] %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row['company_name'] }}</td>
+            <td>{{ row['owner_name'] }}</td>
+            <td>{{ row['email'] }}</td>
+            <td>{{ row['phone'] }}</td>
+            <td>{{ row['address'] }}</td>
+            <td>{{ row['pin'] }}</td>
+            <td>{{ row['upload_business_license'] }}</td>
+            <td>{{ row['upload_tax_license'] }}</td>
+        </tr>
+        {% endfor %}
+    </table> 
+    {% include 'footer.html' %} 
+
+<!-- <center>
+<div class="container py-5">
+    <div class="row">
+        {% for row in data1['view_retail'] %}
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card shadow-lg border-light" style="width: 100%; border-radius: 15px;">
+                 Replace with a real image source -->
+                <!-- <img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Card image cap" style="border-radius: 15px 15px 0 0;">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ row['company_name'] }}</h5>
+                    <p class="card-text">{{ row['owner_name'] }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Phone:</strong> {{ row['phone'] }}</li>
+                    <li class="list-group-item"><strong>Address:</strong> {{ row['address'] }}</li>
+                    <li class="list-group-item"><strong>Pin:</strong> {{ row['pin'] }}</li>
+                    <li class="list-group-item"><strong>Business License:</strong> {{ row['upload_business_license'] }}</li>
+                    <li class="list-group-item"><strong>Tax License:</strong> {{ row['upload_tax_license'] }}</li>
+                </ul>
+                <div class="card-body">
+                    <a href="mailto:{{ row['email'] }}" class="btn btn-primary btn-block text-white mb-2">{{ row['email'] }}</a>
+                    <a href="#" class="btn btn-secondary btn-block">Another Link</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<br><br><br>
+</center>

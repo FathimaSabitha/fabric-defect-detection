@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional: External stylesheet -->
+    <style>
+        /* General page styling */
+        /* body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        } */
+
+        header, footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 32px;
+        }
+
+        /* Container for the feedback form and table */
+        /* .container {
+            width: 80%;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        } */
+
+        /* Form styling */
+        form {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        /* Styling for table and form inputs */
+        table th, table td, select, input[type="text"], input[type="submit"] {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table td {
+            color: #555;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 20px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Center content */
+        .center-content {
+            text-align: center;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'retailer_header.html' %}
+     <br><br><br><br>
+    <div class="container">
+        <h1>Feedback Form</h1>
+
+        <!-- Feedback Form -->
+        <form method="post">
+            <table>
+                <tr>
+                    <td><select name="w_id">
+                        <option value="" disabled selected>Select Wholesaler</option>
+                        {% for i in data1['whole'] %}
+                        <option value="{{i['wholesaler_id']}}">{{i['company_name']}}</option>
+                        {% endfor %}
+                    </select></td>
+                </tr>
+
+                <tr>
+                    <th>Feedback:</th>
+                    <td><input type="text" name="feedback" placeholder="Enter your feedback" required></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="center-content"><input type="submit" name="Submit" value="Submit Feedback"></td>
+                </tr>
+            </table>
+        </form>
+
+        <!-- Feedback Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Feedback</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for j in data2['view'] %}
+                <tr>
+                    <td>{{j['feedback']}}</td>
+                    <td>{{j['date']}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'footer.html' %}
+<br><br>
+</body>
+</html>

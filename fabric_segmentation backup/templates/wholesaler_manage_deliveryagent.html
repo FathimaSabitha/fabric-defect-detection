@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Agent Management</title>
+    <style>
+        /* Custom Styles for Delivery Agent Management */
+        /* body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        } */
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .form-section th {
+            text-align: right;
+            padding: 10px;
+            width: 25%;
+            color: #666;
+        }
+
+        .form-section td {
+            padding: 10px;
+            color: #555;
+        }
+
+        .form-section input[type="text"], .form-section input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #fafafa;
+        }
+
+        .form-section input[type="submit"] {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-section input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Card Layout for Viewing Delivery Agents */
+        .agents-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .agent-card {
+            background-color: #ffffff;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .agent-card:hover {
+            transform: scale(1.05);
+        }
+
+        .agent-card h5 {
+            color: #333;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .agent-card p {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .agent-card .actions {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .agent-card .btn-update, .agent-card .btn-delete {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .agent-card .btn-update {
+            background-color: #28a745;
+        }
+
+        .agent-card .btn-update:hover {
+            background-color: #218838;
+        }
+
+        .agent-card .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .agent-card .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .agents-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+    </style>
+
+    <script>
+        // Custom validation function for form fields
+        function validateForm() {
+            // Phone number validation (10 digits)
+            const phoneRegex = /^[0-9]{10}$/;
+            const phone = document.forms["agentForm"]["phone"].value;
+            if (!phoneRegex.test(phone)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return false;
+            }
+
+            // Password validation (at least 6 characters)
+            const password = document.forms["agentForm"]["password"].value;
+            if (password.length < 6) {
+                alert("Password should be at least 6 characters long.");
+                return false;
+            }
+
+            // Name validation (Only alphabets)
+            const nameRegex = /^[A-Za-z]+$/;
+            const fname = document.forms["agentForm"]["fname"].value;
+            const lname = document.forms["agentForm"]["lname"].value;
+
+            if (!nameRegex.test(fname) || !nameRegex.test(lname)) {
+                alert("Names should only contain alphabets.");
+                return false;
+            }
+
+            // Place and Address validation (non-empty)
+            const place = document.forms["agentForm"]["place"].value;
+            const address = document.forms["agentForm"]["address"].value;
+
+            if (place.trim() === "" || address.trim() === "") {
+                alert("Place and Address fields cannot be empty.");
+                return false;
+            }
+
+            return true; // Form is valid
+        }
+    </script>
+</head>
+<body>
+
+    {% include 'wholesaler_header.html' %}
+    <br><br><br>
+
+    <div class="container">
+        {% if data['up'] %}
+        <div class="form-section">
+            <h1>Update Delivery Agent</h1>
+            <form method="post" name="agentForm" onsubmit="return validateForm()">
+                <table>
+                    <tr>
+                        <th>First Name:</th>
+                        <td><input type="text" name="fname" value="{{data['up'][0]['fname']}}" required></td>
+                    </tr>
+                    <tr>
+                        <th>Last Name:</th>
+                        <td><input type="text" name="lname" value="{{data['up'][0]['lname']}}" required></td>
+                    </tr>
+                    <tr>
+                        <th>Place:</th>
+                        <td><input type="text" name="place" value="{{data['up'][0]['place']}}" required></td>
+                    </tr>
+                    <tr>
+                        <th>Phone:</th>
+                        <td><input type="text" name="phone" value="{{data['up'][0]['phone']}}" required></td>
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td><input type="text" name="address" value="{{data['up'][0]['address']}}" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" name="update" value="Update Agent"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        {% else %}
+        <div class="form-section">
+            <h1>Add Delivery Agent</h1>
+            <form method="post" name="agentForm" onsubmit="return validateForm()">
+                <table>
+                    <tr>
+                        <th>First Name:</th>
+                        <td><input type="text" name="fname" required></td>
+                    </tr>
+                    <tr>
+                        <th>Last Name:</th>
+                        <td><input type="text" name="lname" required></td>
+                    </tr>
+                    <tr>
+                        <th>Place:</th>
+                        <td><input type="text" name="place" required></td>
+                    </tr>
+                    <tr>
+                        <th>Phone:</th>
+                        <td><input type="text" name="phone" required></td>
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td><input type="text" name="address" required></td>
+                    </tr>
+                    <tr>
+                        <th>Username:</th>
+                        <td><input type="text" name="username" required></td>
+                    </tr>
+                    <tr>
+                        <th>Password:</th>
+                        <td><input type="password" name="password" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" name="Submit" value="Add Agent"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        {% endif %}
+
+        <h1>View Delivery Agents</h1>
+        <div class="agents-container">
+            {% for row in data['view'] %}
+            <div class="agent-card">
+                <h5>{{ row['fname'] }} {{ row['lname'] }}</h5>
+                <p><strong>Place:</strong> {{ row['place'] }}</p>
+                <p><strong>Phone:</strong> {{ row['phone'] }}</p>
+                <p><strong>Address:</strong> {{ row['address'] }}</p>
+                <div class="actions">
+                    <a href="?action=update&id={{ row['dg_id'] }}" class="btn-update">Update</a>
+                    <a href="?action=delete&id={{ row['dg_id'] }}" class="btn-delete">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

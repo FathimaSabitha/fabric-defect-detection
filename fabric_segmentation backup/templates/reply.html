@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+{% include 'admin_header.html' %}
+<br><br><br><br>
+<body>
+    <center>
+    <h1>Reply For Feedback</h1>
+    <form method="post">
+       <textarea id="reply" name="reply" placeholder="Write your reply here"></textarea>
+       <input type="submit" name="submit" value="Submit Reply">
+   
+    </form>
+</center>
+    <br><br><br>
+    {% include 'footer.html' %}
+</body>
+</html>                 
